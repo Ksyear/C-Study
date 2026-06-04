@@ -39,6 +39,65 @@ public: // 구현 단계에서 객체를 만들때 상속하면 여러개가 계
          << ", Updated At: " << updatedAt;
   }
 
+  virtual bool markAsCompleted()
+  {
+    return /*isCompleted = */ true;
+  }
+
+  int getId()
+  {
+    return id;
+  }
+
+  string getTitle()
+  {
+    return title;
+  }
+
+  string getDescription()
+  {
+    return description;
+  }
+
+  string getStartDate()
+  {
+    return startDate;
+  }
+
+  string getEndDate()
+  {
+    return endDate;
+  }
+
+  string getStartTime()
+  {
+    return startTime;
+  }
+
+  string getEndTime()
+  {
+    return endTime;
+  }
+
+  string getPriority()
+  {
+    return priority;
+  }
+
+  std::time_t getCreatedAt()
+  {
+    return createdAt;
+  }
+
+  std::time_t getUpdatedAt()
+  {
+    return updatedAt;
+  }
+
+  bool getIsCompleted(){
+    return isCompleted;
+  }
+
 private:
   int id = 0;
   string priority, title, description;
@@ -67,6 +126,26 @@ public:
          << ", Memo: " << memo;
   }
 
+  bool markAsCompleted(string title)
+  {
+    ScheduleItem::markAsCompleted();
+  }
+
+  string getCategory()
+  {
+    return category;
+  }
+
+  string getPlace()
+  {
+    return place;
+  }
+
+  string getMemo()
+  {
+    return memo;
+  }
+
 private:
   string category, place, memo;
   system_clock::time_point now = system_clock::now();
@@ -91,6 +170,31 @@ public:
          << ", Participants: " << participantns
          << ", Agenda: " << agenda
          << ", Host: " << host;
+  }
+
+  void markAsCompleted(string title)
+  {
+    ScheduleItem::markAsCompleted();
+  }
+
+  string getLocation()
+  {
+    return location;
+  }
+
+  string getParticipantns()
+  {
+    return participantns;
+  }
+
+  string getAgenda()
+  {
+    return agenda;
+  }
+
+  string getHost()
+  {
+    return host;
   }
 
 private:
@@ -118,6 +222,31 @@ public:
          << ", Host: " << assignedTo;
   }
 
+  void markAsCompleted(string title)
+  {
+    ScheduleItem::markAsCompleted();
+  }
+
+  string getDeadline()
+  {
+    return deadline;
+  }
+
+  string getProgress()
+  {
+    return progress;
+  }
+
+  string getTaskStatus()
+  {
+    return taskStatus;
+  }
+
+  string getAssignedTo()
+  {
+    return assignedTo;
+  }
+
 private:
   string deadline, progress, taskStatus, assignedTo;
   system_clock::time_point now = system_clock::now();
@@ -132,6 +261,26 @@ public:
     this->reminderMessage = reminderMessage;
     this->notificationType = notificationType;
     this->isReminderSent = false;
+  }
+
+  int markAsCompleted(string title)
+  {
+    ScheduleItem::markAsCompleted();
+  }
+
+  string getReminderTime()
+  {
+    return reminderTime;
+  }
+
+  string getReminderMessage()
+  {
+    return reminderMessage;
+  }
+
+  string getNotificationType()
+  {
+    return notificationType;
   }
 
 private:
@@ -222,9 +371,9 @@ public: // 구현 단계에서 객체를 만들때 상속하면 여러개가 계
         if (scheduleItems[i] == nullptr)
         {
           cout << "값을 입력하시오" << endl;
-          cin >> title >> description >> startDate >> endDate >> startTime >> endTime >> priority >> deadline >> progress >> taskStatus;
+          cin >> title >> description >> startDate >> endDate >> startTime >> endTime >> priority >> deadline >> progress >> taskStatus >> assignedTo;
           system_clock::time_point now = system_clock::now();
-          scheduleItems[i] = new TaskSchedule(title, description, startDate, endDate, startTime, endTime, priority, now, deadline, progress, taskStatus);
+          scheduleItems[i] = new TaskSchedule(title, description, startDate, endDate, startTime, endTime, priority, now, deadline, progress, taskStatus, assignedTo);
           cout << "일정이 추가되었습니다." << endl;
           break;
         }
@@ -249,37 +398,33 @@ public: // 구현 단계에서 객체를 만들때 상속하면 여러개가 계
     }
   }
 
-  //   void displayAllSchedules()
-  //   {
-  //     if (scheduleItems[0] == nullptr)
-  //     {
-  //       cerr << "일정이 없습니다." << endl;
-  //       return;
-  //     }
-  //     for (int i = 0; i < 100; i++)
-  //     {
-  //     }
-  //   }
+  void displayAllSchedules()
+  {
+    if (scheduleItems[0] == nullptr)
+    {
+      cerr << "일정이 없습니다." << endl;
+      return;
+    }
+    for (int i = 0; i < 100; i++)
+    {
+      if (scheduleItems[i] == nullptr)
+        break;
+      scheduleItems[i]->displayAllSchedules();
+      cout << endl;
+    }
+  }
 
-  //   void displaySchedule(int id)
-  //   {
-  //     if (id > 100 || id < 0 || scheduleItems[id] == nullptr)
-  //     {
-  //       cerr << "일정을 찾을 수 없습니다: ID " << id << endl;
-  //       return;
-  //     }
-  //     cout << "ID: " << scheduleItems[id]->id
-  //          << ", Title: " << scheduleItems[id]->title
-  //          << ", Description: " << scheduleItems[id]->description
-  //          << ", Start Date: " << scheduleItems[id]->startDate
-  //          << ", End Date: " << scheduleItems[id]->endDate
-  //          << ", Start Time: " << scheduleItems[id]->startTime
-  //          << ", End Time: " << scheduleItems[id]->endTime
-  //          << ", Priority: " << scheduleItems[id]->priority
-  //          << ", Created At: " << scheduleItems[id]->createdAt
-  //          << ", Updated At: " << scheduleItems[id]->updatedAt
-  //          << endl;
-  //   }
+  void displaySchedule(int id)
+  {
+    if (id > 100 || id < 0 || scheduleItems[id] == nullptr)
+    {
+      cerr << "일정을 찾을 수 없습니다: ID " << id << endl;
+      return;
+    }
+    scheduleItems[id]->displayAllSchedules();
+    cout << endl;
+    return;
+  }
 
   //   void updateSchedule(int id)
   //   {
@@ -346,120 +491,96 @@ public: // 구현 단계에서 객체를 만들때 상속하면 여러개가 계
   //     }
   //   }
 
-  //   void deleteSchedule(int id)
-  //   {
-  //     if (scheduleItems[id] != nullptr && scheduleItems[id]->id == id)
-  //     {
-  //       delete scheduleItems[id];
-  //       scheduleItems[id] = nullptr;
-  //       cout << "일정이 삭제되었습니다: ID " << id << endl;
-  //     }
-  //     else
-  //     {
-  //       cerr << "일정을 찾을 수 없습니다: ID " << id << endl;
-  //     }
-  //   }
+  void deleteSchedule(int id)
+  {
+    if (scheduleItems[id] != nullptr && scheduleItems[id]->getId() == id)
+    {
+      delete scheduleItems[id];
+      scheduleItems[id] = nullptr;
+      cout << "일정이 삭제되었습니다: ID " << id << endl;
+    }
+    else
+    {
+      cerr << "일정을 찾을 수 없습니다: ID " << id << endl;
+    }
+  }
 
-  //   void completeSchedule(int id)
+  // void completeSchedule(int id)
+  // {
+  //   int num;
+  //   if (scheduleItems[id] != nullptr && scheduleItems[id]->getId() == id)
   //   {
-  //     if (scheduleItems[id] != nullptr && scheduleItems[id]->id == id)
-  //     {
-  //       markAsCopleted(scheduleItems[id]->title);
-  //     }
-  //     else
-  //     {
-  //       cerr << "일정을 찾을 수 없습니다: ID " << id << endl;
-  //     }
+  //     scheduleItems[id]->markAsCompleted();
+  //     // typeid을 사용하여 클래스를 확인가능하다고 하네요
+  //     if (typeid(scheduleItems[id]) == typeid(ReminderSchedule))
   //   }
-
-  //   void searchByTitle(string title)
+  //   else
   //   {
-  //     for (int i = 0; i < 100; i++)
-  //     {
-  //       if (scheduleItems[i] == nullptr)
-  //       {
-  //         cerr << "일정을 찾을 수 없습니다: ID " << id << endl;
-  //         return;
-  //       }
-  //       if (scheduleItems[i]->title == title)
-  //       {
-  //         cout << "ID: " << scheduleItems[id]->id
-  //              << ", Title: " << scheduleItems[id]->title
-  //              << ", Description: " << scheduleItems[id]->description
-  //              << ", Start Date: " << scheduleItems[id]->startDate
-  //              << ", End Date: " << scheduleItems[id]->endDate
-  //              << ", Start Time: " << scheduleItems[id]->startTime
-  //              << ", End Time: " << scheduleItems[id]->endTime
-  //              << ", Priority: " << scheduleItems[id]->priority
-  //              << ", Created At: " << scheduleItems[id]->createdAt
-  //              << ", Updated At: " << scheduleItems[id]->updatedAt
-  //              << endl;
-  //         return;
-  //       }
-  //     }
+  //     cerr << "일정을 찾을 수 없습니다: ID " << id << endl;
   //   }
+  // }
 
-  //   void searchByDate(string startDate)
-  //   {
-  //     if (scheduleItems[0] == nullptr)
-  //     {
-  //       cerr << "일정을 찾을 수 없습니다: ID " << id << endl;
-  //       return;
-  //     }
-  //     for (int i = 0; i < 100; i++)
-  //     {
-  //       if (scheduleItems[i] == nullptr)
-  //       {
-  //         cerr << "일정을 찾을 수 없습니다: ID " << id << endl;
-  //         return;
-  //       }
-  //       if (scheduleItems[i]->startDate == startDate)
-  //       {
-  //         cout << "ID: " << scheduleItems[id]->id
-  //              << ", Title: " << scheduleItems[id]->title
-  //              << ", Description: " << scheduleItems[id]->description
-  //              << ", Start Date: " << scheduleItems[id]->startDate
-  //              << ", End Date: " << scheduleItems[id]->endDate
-  //              << ", Start Time: " << scheduleItems[id]->startTime
-  //              << ", End Time: " << scheduleItems[id]->endTime
-  //              << ", Priority: " << scheduleItems[id]->priority
-  //              << ", Created At: " << scheduleItems[id]->createdAt
-  //              << ", Updated At: " << scheduleItems[id]->updatedAt
-  //              << endl;
-  //       }
-  //     }
-  //   }
+  void searchByTitle(string title)
+  {
+    for (int i = 0; i < 100; i++)
+    {
+      if (scheduleItems[i] == nullptr)
+      {
+        cerr << "일정을 찾을 수 없습니다: title " << title << endl;
+        return;
+      }
+      if (scheduleItems[i]->getTitle() == title)
+      {
+        scheduleItems[i]->displayAllSchedules();
+        cout << endl;
+        return;
+      }
+    }
+  }
 
-  //   void searchByPriority(string priority)
-  //   { // if 반복되는건 따로 함수로 빼서 설정하기
-  //     if (scheduleItems[0] == nullptr)
-  //     {
-  //       cerr << "일정을 찾을 수 없습니다: ID " << id << endl;
-  //       return;
-  //     }
-  //     for (int i = 0; i < 100; i++)
-  //     {
-  //       if (scheduleItems[i] == nullptr)
-  //       {
-  //         cerr << "일정을 찾을 수 없습니다: ID " << id << endl;
-  //         return;
-  //       }
-  //       if (scheduleItems[i]->priority == priority)
-  //       {
-  //         cout << "ID: " << scheduleItems[id]->id
-  //              << ", Title: " << scheduleItems[id]->title
-  //              << ", Description: " << scheduleItems[id]->description
-  //              << ", Start Date: " << scheduleItems[id]->startDate
-  //              << ", End Date: " << scheduleItems[id]->endDate
-  //              << ", Start Time: " << scheduleItems[id]->startTime
-  //              << ", End Time: " << scheduleItems[id]->endTime
-  //              << ", Priority: " << scheduleItems[id]->priority
-  //              << ", Created At: " << scheduleItems[id]->createdAt
-  //              << ", Updated At: " << scheduleItems[id]->updatedAt
-  //              << endl;
-  //       }
-  //     }
-  //   }
+  void searchByDate(string startDate)
+  {
+    if (scheduleItems[0] == nullptr)
+    {
+      cerr << "일정을 찾을 수 없습니다: startDate " << startDate << endl;
+      return;
+    }
+    for (int i = 0; i < 100; i++)
+    {
+      if (scheduleItems[i] == nullptr)
+      {
+        cerr << "일정을 찾을 수 없습니다: startDate " << startDate << endl;
+        return;
+      }
+      if (scheduleItems[i]->getStartDate() == startDate)
+      {
+        scheduleItems[i]->displayAllSchedules();
+        cout << endl;
+      }
+    }
+  }
+
+  void searchByPriority(string priority)
+  {
+    if (scheduleItems[0] == nullptr)
+    {
+      cerr << "일정을 찾을 수 없습니다: priority " << priority << endl;
+      return;
+    }
+    for (int i = 0; i < 100; i++)
+    {
+      if (scheduleItems[i] == nullptr)
+      {
+        cerr << "일정을 찾을 수 없습니다: priority " << priority << endl;
+        return;
+      }
+      if (scheduleItems[i]->getPriority() == priority)
+      {
+        scheduleItems[i]->displayAllSchedules();
+        cout << endl;
+      }
+    }
+  }
 
   //   void sortByDate(string startDate, string startTime)
   //   {
@@ -478,130 +599,85 @@ public: // 구현 단계에서 객체를 만들때 상속하면 여러개가 계
   //     }
   //   }
 
-  //   void sortByPriority(string priority)
-  //   {
-  //     if (scheduleItems[0] == nullptr)
-  //     {
-  //       cerr << "일정을 찾을 수 없습니다: ID " << id << endl;
-  //       return;
-  //     }
-  //     for (int i = 0; i < 100; i++)
-  //     {
-  //       if (scheduleItems[i] == nullptr)
-  //       {
-  //         break;
-  //       }
-  //       if (scheduleItems[i]->priority == "HIGH")
-  //       {
-  //         cout << "ID: " << scheduleItems[id]->id
-  //              << ", Title: " << scheduleItems[id]->title
-  //              << ", Description: " << scheduleItems[id]->description
-  //              << ", Start Date: " << scheduleItems[id]->startDate
-  //              << ", End Date: " << scheduleItems[id]->endDate
-  //              << ", Start Time: " << scheduleItems[id]->startTime
-  //              << ", End Time: " << scheduleItems[id]->endTime
-  //              << ", Priority: " << scheduleItems[id]->priority
-  //              << ", Created At: " << scheduleItems[id]->createdAt
-  //              << ", Updated At: " << scheduleItems[id]->updatedAt
-  //              << endl;
-  //       }
-  //     }
-  //     for (int i = 0; i < 100; i++)
-  //     {
-  //       if (scheduleItems[i] == nullptr)
-  //       {
-  //         break;
-  //       }
-  //       if (scheduleItems[i]->priority == "MEDIUM")
-  //       {
-  //         cout << "ID: " << scheduleItems[id]->id
-  //              << ", Title: " << scheduleItems[id]->title
-  //              << ", Description: " << scheduleItems[id]->description
-  //              << ", Start Date: " << scheduleItems[id]->startDate
-  //              << ", End Date: " << scheduleItems[id]->endDate
-  //              << ", Start Time: " << scheduleItems[id]->startTime
-  //              << ", End Time: " << scheduleItems[id]->endTime
-  //              << ", Priority: " << scheduleItems[id]->priority
-  //              << ", Created At: " << scheduleItems[id]->createdAt
-  //              << ", Updated At: " << scheduleItems[id]->updatedAt
-  //              << endl;
-  //       }
-  //     }
-  //     for (int i = 0; i < 100; i++)
-  //     {
-  //       if (scheduleItems[i] == nullptr)
-  //       {
-  //         break;
-  //       }
-  //       if (scheduleItems[i]->priority == "LOW")
-  //       {
-  //         cout << "ID: " << scheduleItems[id]->id
-  //              << ", Title: " << scheduleItems[id]->title
-  //              << ", Description: " << scheduleItems[id]->description
-  //              << ", Start Date: " << scheduleItems[id]->startDate
-  //              << ", End Date: " << scheduleItems[id]->endDate
-  //              << ", Start Time: " << scheduleItems[id]->startTime
-  //              << ", End Time: " << scheduleItems[id]->endTime
-  //              << ", Priority: " << scheduleItems[id]->priority
-  //              << ", Created At: " << scheduleItems[id]->createdAt
-  //              << ", Updated At: " << scheduleItems[id]->updatedAt
-  //              << endl;
-  //       }
-  //     }
-  //     return;
-  //   }
+  void sortByPriority(string priority)
+  {
+    if (scheduleItems[0] == nullptr)
+    {
+      cerr << "일정을 찾을 수 없습니다: priority " << priority << endl;
+      return;
+    }
+    for (int i = 0; i < 100; i++)
+    {
+      if (scheduleItems[i] == nullptr)
+      {
+        break;
+      }
+      if (scheduleItems[i]->getPriority() == "HIGH")
+      {
+        scheduleItems[i]->displayAllSchedules();
+        cout << endl;
+      }
+    }
+    for (int i = 0; i < 100; i++)
+    {
+      if (scheduleItems[i] == nullptr)
+      {
+        break;
+      }
+      if (scheduleItems[i]->getPriority() == "MEDIUM")
+      {
+        scheduleItems[i]->displayAllSchedules();
+        cout << endl;
+      }
+    }
+    for (int i = 0; i < 100; i++)
+    {
+      if (scheduleItems[i] == nullptr)
+      {
+        break;
+      }
+      if (scheduleItems[i]->getPriority() == "LOW")
+      {
+        scheduleItems[i]->displayAllSchedules();
+        cout << endl;
+      }
+    }
+    return;
+  }
 
-  //   void sortByCompleted(string isCompleted)
-  //   {
-  //     if (scheduleItems[0] == nullptr)
-  //     {
-  //       cerr << "일정을 찾을 수 없습니다: ID " << id << endl;
-  //       return;
-  //     }
-  //     for (int i = 0; i < 100; i++)
-  //     {
-  //       if (scheduleItems[i] == nullptr)
-  //       {
-  //         break;
-  //       }
-  //       if (scheduleItems[i]->isCompleted == false)
-  //       {
-  //         cout << "ID: " << scheduleItems[id]->id
-  //              << ", Title: " << scheduleItems[id]->title
-  //              << ", Description: " << scheduleItems[id]->description
-  //              << ", Start Date: " << scheduleItems[id]->startDate
-  //              << ", End Date: " << scheduleItems[id]->endDate
-  //              << ", Start Time: " << scheduleItems[id]->startTime
-  //              << ", End Time: " << scheduleItems[id]->endTime
-  //              << ", Priority: " << scheduleItems[id]->priority
-  //              << ", Created At: " << scheduleItems[id]->createdAt
-  //              << ", Updated At: " << scheduleItems[id]->updatedAt
-  //              << endl;
-  //       }
-  //     }
-  //     for (int i = 0; i < 100; i++)
-  //     {
-  //       if (scheduleItems[i] == nullptr)
-  //       {
-  //         break;
-  //       }
-  //       if (scheduleItems[i]->isCompleted == true)
-  //       {
-  //         cout << "ID: " << scheduleItems[id]->id
-  //              << ", Title: " << scheduleItems[id]->title
-  //              << ", Description: " << scheduleItems[id]->description
-  //              << ", Start Date: " << scheduleItems[id]->startDate
-  //              << ", End Date: " << scheduleItems[id]->endDate
-  //              << ", Start Time: " << scheduleItems[id]->startTime
-  //              << ", End Time: " << scheduleItems[id]->endTime
-  //              << ", Priority: " << scheduleItems[id]->priority
-  //              << ", Created At: " << scheduleItems[id]->createdAt
-  //              << ", Updated At: " << scheduleItems[id]->updatedAt
-  //              << endl;
-  //       }
-  //     }
-  //     return;
-  //   }
+    void sortByCompleted(string isCompleted)
+    {
+      if (scheduleItems[0] == nullptr)
+      {
+        cerr << "일정을 찾을 수 없습니다: isCompleted " << isCompleted << endl;
+        return;
+      }
+      for (int i = 0; i < 100; i++)
+      {
+        if (scheduleItems[i] == nullptr)
+        {
+          break;
+        }
+        if (scheduleItems[i]->getIsCompleted() == false)
+        {
+          scheduleItems[i]->displayAllSchedules();
+        cout << endl;
+        }
+      }
+      for (int i = 0; i < 100; i++)
+      {
+        if (scheduleItems[i] == nullptr)
+        {
+          break;
+        }
+        if (scheduleItems[i]->getIsCompleted() == true)
+        {
+          scheduleItems[i]->displayAllSchedules();
+        cout << endl;
+        }
+      }
+      return;
+    }
 
   bool checkConglict(string startDate, string endDate, string startTime, string endTime)
   {
@@ -611,10 +687,10 @@ public: // 구현 단계에서 객체를 만들때 상속하면 여러개가 계
       {
         return false;
       }
-      if (stoi(scheduleItems[i]->startDate.substr(0, 3)) <= stoi(startDate.substr(0, 3)) && stoi(scheduleItems[i]->startDate.substr(5, 6)) <= stoi(startDate.substr(5, 6)) && stoi(scheduleItems[i]->startDate.substr(8, 9)) <= stoi(startDate.substr(8, 9)) &&
-          stoi(scheduleItems[i]->endDate.substr(0, 3)) >= stoi(endDate.substr(0, 3)) && stoi(scheduleItems[i]->endDate.substr(5, 6)) >= stoi(endDate.substr(5, 6)) && stoi(scheduleItems[i]->endDate.substr(8, 9)) >= stoi(endDate.substr(8, 9)) && stoi(startTime.substr(0, 2)) > stoi(endTime.substr(0, 2)) ||
-          stoi(scheduleItems[i]->startTime.substr(3, 5)) > stoi(endTime.substr(3, 5)) && stoi(scheduleItems[i]->startTime.substr(0, 1)) <= stoi(startTime.substr(0, 1)) && stoi(scheduleItems[i]->startTime.substr(3, 4)) <= stoi(startTime.substr(3, 4)) &&
-          stoi(scheduleItems[i]->endTime.substr(0, 1)) >= stoi(endTime.substr(0, 1)) && stoi(scheduleItems[i]->endTime.substr(3, 4)) >= stoi(endTime.substr(3, 4)))
+      if (stoi(scheduleItems[i]->getStartDate().substr(0, 3)) <= stoi(startDate.substr(0, 3)) && stoi(scheduleItems[i]->getStartDate().substr(5, 6)) <= stoi(startDate.substr(5, 6)) && stoi(scheduleItems[i]->getStartDate().substr(8, 9)) <= stoi(startDate.substr(8, 9)) &&
+          stoi(scheduleItems[i]->getEndDate().substr(0, 3)) >= stoi(endDate.substr(0, 3)) && stoi(scheduleItems[i]->getEndDate().substr(5, 6)) >= stoi(endDate.substr(5, 6)) && stoi(scheduleItems[i]->getEndDate().substr(8, 9)) >= stoi(endDate.substr(8, 9)) &&
+          stoi(scheduleItems[i]->getStartTime().substr(0, 1)) <= stoi(startTime.substr(0, 1)) && stoi(scheduleItems[i]->getStartTime().substr(3, 4)) <= stoi(startTime.substr(3, 4)) &&
+          stoi(scheduleItems[i]->getEndTime().substr(0, 1)) >= stoi(endTime.substr(0, 1)) && stoi(scheduleItems[i]->getEndTime().substr(3, 4)) >= stoi(endTime.substr(3, 4)))
       {
         cerr << "충돌이 났습니다. " << endl;
         return true;
@@ -649,23 +725,6 @@ public: // 구현 단계에서 객체를 만들때 상속하면 여러개가 계
   //         cout << "이 일정은 ReminderSchedule입니다.";
   //       }
   //       return;
-  //     }
-  //   }
-
-  //   int markAsCompleted(string title)
-  //   {
-  //     for (int i = 0; i < 100; i++)
-  //     {
-  //       if (scheduleItems[i] == nullptr)
-  //       {
-  //         cerr << "일정을 찾을 수 없습니다: ID " << id << endl;
-  //         return;
-  //       }
-  //       if (scheduleItems[i]->title == title)
-  //       {
-  //         scheduleItems[i]->isCompleted = true;
-  //         return i;
-  //       }
   //     }
   //   }
 
@@ -706,6 +765,7 @@ private:
 
 int main()
 {
+  ScheduleManager test;
   for (;;)
   {
     cout << "일정 관리 프로그램입니다. 원하는 작업을 선택하세요: 1. 일정 등록, 2. 전체 일정 조회, 3. 일정 상세 조회, 4. 일정 수정, 5. 일정 삭제, 6. 일정 완료 처리, 7. 제목 검색, 8. 날짜 검색, 9. 중요도 검색, 10. 날짜순 정렬, 11. 중요도순 정렬, 12. 완료 여부순 정렬, 13. 알림 실행, 14. 프로그램 종료" << endl;
@@ -715,49 +775,49 @@ int main()
     {
     case 1:
       cout << "일정 관리 프로그램입니다. 원하는 작업을 선택하세요: 1. GeneralSchedule, 2. MeetingSchedule, 3. TaskSchedule, 4. ReminderSchedule" << endl;
-      ScheduleManager.add continue;
-    case 2:
-      ScheduleItem scheduleItem;
-      scheduleItem.displayAllSchedules();
+      test.addSchedule();
       continue;
+    case 2:
+      test.displayAllSchedules();
+      break;
     case 3:
       int id;
       cout << "조회할 일정의 ID를 입력하시오: ";
       cin >> id;
-      scheduleItem.displaySchedule(id);
+      test.displaySchedule(id);
       continue;
     case 4:
       cout << "수정할 일정의 ID를 입력하시오: ";
       cin >> id;
-      scheduleItem.updateSchedule(id);
+      // test.updateSchedule(id);
       continue;
     case 5:
       cout << "삭제할 일정의 ID를 입력하시오: ";
       cin >> id;
-      scheduleItem.deleteSchedule(id);
+      test.deleteSchedule(id);
       continue;
     case 6:
       cout << "완료 처리할 일정의 ID를 입력하시오: ";
       cin >> id;
-      scheduleItem.completeSchedule(id);
+      // test.completeSchedule(id);
       continue;
     case 7:
       string title;
       cout << "검색할 일정의 제목을 입력하시오: ";
       cin >> title;
-      scheduleItem.searchByTitle(title);
+      test.searchByTitle(title);
       continue;
     case 8:
       string startDate;
       cout << "검색할 일정의 시작 날짜를 입력하시오 (YYYY-MM-DD): ";
       cin >> startDate;
-      scheduleItem.searchByDate(startDate);
+      test.searchByDate(startDate);
       continue;
     case 9:
       string priority;
       cout << "검색할 일정의 중요도를 입력하시오 (HIGH, MEDIUM, LOW): ";
       cin >> priority;
-      scheduleItem.searchByPriority(priority);
+      test.searchByPriority(priority);
       continue;
     case 10:
       string startTime;
@@ -765,23 +825,23 @@ int main()
       cin >> startDate;
       cout << "정렬할 일정의 시작 시간을 입력하시오 (HH:MM): ";
       cin >> startTime;
-      scheduleItem.sortByDate(startDate, startTime);
+      // test.sortByDate(startDate, startTime);
       continue;
     case 11:
       cout << "정렬할 일정의 중요도를 입력하시오 (HIGH, MEDIUM, LOW): ";
       cin >> priority;
-      scheduleItem.sortByPriority(priority);
+      test.sortByPriority(priority);
       continue;
     case 12:
       string isCompleted;
       cout << "정렬할 일정의 완료 여부를 입력하시오 (true, false): ";
       cin >> isCompleted;
-      scheduleItem.sortByCompleted(isCompleted);
+      test.sortByCompleted(isCompleted);
       continue;
     case 13:
       cout << "알림을 실행할 일정의 ID를 입력하시오: ";
       cin >> id;
-      scheduleItem.runNotification(id);
+      test.runNotification(id);
       continue;
     case 14:
       cout << "프로그램을 종료합니다." << endl;
@@ -791,5 +851,6 @@ int main()
       break;
     }
   }
+
   return 0;
 }
