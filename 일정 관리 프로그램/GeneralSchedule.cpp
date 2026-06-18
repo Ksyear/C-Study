@@ -1,56 +1,47 @@
-#pragma once
+#include "GeneralSchedule.h"
 
-#include "ScheduleItem.cpp"
+#include <iostream>
 
-class GeneralSchedule : public ScheduleItem
+GeneralSchedule::GeneralSchedule(int idCounter, string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now, string category, string place, string memo)
+    : ScheduleItem(idCounter, title, description, startDate, endDate, startTime, endTime, priority, now)
 {
-public:
-  GeneralSchedule(int idCounter, string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now, string category, string place, string memo)
-      : ScheduleItem(idCounter, title, description, startDate, endDate, startTime, endTime, priority, now)
-  {
-    this->category = category;
-    this->place = place;
-    this->memo = memo;
-  }
+  this->category = category;
+  this->place = place;
+  this->memo = memo;
+}
 
-  void displayAllSchedules() override
-  {
-    ScheduleItem::displayAllSchedules();
-    cout << ", Category: " << category
-         << ", Place: " << place
-         << ", Memo: " << memo;
-  }
+void GeneralSchedule::displayAllSchedules()
+{
+  ScheduleItem::displayAllSchedules();
+  cout << ", Category: " << category
+       << ", Place: " << place
+       << ", Memo: " << memo;
+}
 
-  using ScheduleItem::setInfo;
-  void setInfo(string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now, string category, string place, string memo)
-  {
-    ScheduleItem::setInfo(title, description, startDate, endDate, startTime, endTime, priority, now);
-    this->category = category;
-    this->place = place;
-    this->memo = memo;
-  }
+void GeneralSchedule::setInfo(string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now, string category, string place, string memo)
+{
+  ScheduleItem::setInfo(title, description, startDate, endDate, startTime, endTime, priority, now);
+  this->category = category;
+  this->place = place;
+  this->memo = memo;
+}
 
-  void markAsCompleted() override
-  {
-    ScheduleItem::markAsCompleted();
-  }
+void GeneralSchedule::markAsCompleted()
+{
+  ScheduleItem::markAsCompleted();
+}
 
-  string getCategory()
-  {
-    return category;
-  }
+string GeneralSchedule::getCategory()
+{
+  return category;
+}
 
-  string getPlace()
-  {
-    return place;
-  }
+string GeneralSchedule::getPlace()
+{
+  return place;
+}
 
-  string getMemo()
-  {
-    return memo;
-  }
-
-private:
-  string category, place, memo;
-  system_clock::time_point now = system_clock::now();
-};
+string GeneralSchedule::getMemo()
+{
+  return memo;
+}

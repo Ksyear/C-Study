@@ -1,9 +1,6 @@
-#include "ScheduleItem.cpp"
-#include "GeneralSchedule.cpp"
-#include "MeetingSchedule.cpp"
-#include "TaskSchedule.cpp"
-#include "ReminderSchedule.cpp"
-#include "ScheduleManager.cpp"
+#include "ScheduleManager.h"
+
+#include <iostream>
 
 int main()
 {
