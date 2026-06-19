@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+#include <format>
 #include <string>
 #include <chrono>
 #include <ctime>
@@ -7,7 +9,6 @@
 using namespace std::chrono;
 using namespace std;
 
-// id 수정하지 않고도 되게 코드 수정 필요
 class ScheduleItem
 {
 public:
@@ -20,8 +21,6 @@ public:
   virtual void markAsCompleted();
 
   int getId();
-
-  void setId(int id);
 
   string getTitle();
 
@@ -37,9 +36,9 @@ public:
 
   string getPriority();
 
-  std::time_t getCreatedAt();
+  string getCreatedAt();
 
-  std::time_t getUpdatedAt();
+  string getUpdatedAt();
 
   bool getIsCompleted();
 
@@ -52,6 +51,6 @@ private:
   int id = 0;
   string priority, title, description;
   string startDate, endDate, startTime, endTime;
-  std::time_t createdAt, updatedAt; // 이런시긍로 startDate을 
+  string createdAt, updatedAt; // 이런시긍로 startDate을 
   bool isCompleted, conflict;
 };

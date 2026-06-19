@@ -1,10 +1,4 @@
 #include "ScheduleItem.h"
-#include <iostream>
-
-using namespace std::chrono;
-using namespace std;
-
-// 해야할 일: id 바뀌지 않게 할 것 그리고 배열은 계속 옮길것 그리고 id 관련으로 검색하던거는 배열리스트로 변경할것
 
 // 구현 단계에서 객체를 만들때 상속하면 여러개가 계속 만들어지니까 분해할 것
 ScheduleItem::ScheduleItem(int idCounter, string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now)
@@ -18,7 +12,11 @@ ScheduleItem::ScheduleItem(int idCounter, string title, string description, stri
   this->endTime = endTime;
   this->priority = priority;
   this->isCompleted = false;
-  this->createdAt = system_clock::to_time_t(now); // 자동
+  zoned_time zt{locate_zone("Asia/Seoul"), now};
+
+  this->createdAt = std::format("{:%Y-%m-%d %H:%M}", zt);
+  this->updatedAt = std::format("{:%Y-%m-%d %H:%M}", zt);
+  
 }
 
 void ScheduleItem::displayAllSchedules()
@@ -45,7 +43,8 @@ void ScheduleItem::setInfo(string title, string description, string startDate, s
   this->startTime = startTime;
   this->endTime = endTime;
   this->priority = priority;
-  this->updatedAt = system_clock::to_time_t(now); // 자동
+  zoned_time zt{locate_zone("Asia/Seoul"), now};
+  this->updatedAt = std::format("{:%Y-%m-%d %H:%M}", zt);
 }
 
 void ScheduleItem::markAsCompleted()
@@ -56,11 +55,6 @@ void ScheduleItem::markAsCompleted()
 int ScheduleItem::getId()
 {
   return id;
-}
-
-void ScheduleItem::setId(int id)
-{
-  this->id = id;
 }
 
 string ScheduleItem::getTitle()
@@ -98,12 +92,12 @@ string ScheduleItem::getPriority()
   return priority;
 }
 
-std::time_t ScheduleItem::getCreatedAt()
+string ScheduleItem::getCreatedAt()
 {
   return createdAt;
 }
 
-std::time_t ScheduleItem::getUpdatedAt()
+string ScheduleItem::getUpdatedAt()
 {
   return updatedAt;
 }
