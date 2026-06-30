@@ -5,7 +5,7 @@
 class ReminderSchedule : public ScheduleItem
 {
 public:
-  ReminderSchedule(int idCounter, string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now, string reminderTime, string reminderMessage, string notificationType);
+  ReminderSchedule(int id, string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now, string reminderTime, string reminderMessage, string notificationType);
 
   void displayAllSchedules() override;
 
@@ -14,6 +14,10 @@ public:
   void markAsCompleted() override;
 
   string getReminderMessage() override;
+
+  string getType() const override;
+
+  string serialize() const override;
 
   bool getIsReminderSent();
 

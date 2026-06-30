@@ -2,8 +2,8 @@
 
 #include <iostream>
 
-GeneralSchedule::GeneralSchedule(int idCounter, string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now, string category, string place, string memo)
-    : ScheduleItem(idCounter, title, description, startDate, endDate, startTime, endTime, priority, now)
+GeneralSchedule::GeneralSchedule(int id, string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now, string category, string place, string memo)
+    : ScheduleItem(id, title, description, startDate, endDate, startTime, endTime, priority, now)
 {
   this->category = category;
   this->place = place;
@@ -29,6 +29,21 @@ void GeneralSchedule::setInfo(string title, string description, string startDate
 void GeneralSchedule::markAsCompleted()
 {
   ScheduleItem::markAsCompleted();
+}
+
+string GeneralSchedule::getType() const
+{
+  return "GENERAL";
+}
+
+string GeneralSchedule::serialize() const
+{
+  std::ostringstream oss;
+  oss << serializeCommon() << '|'
+      << category << '|'
+      << place << '|'
+      << memo;
+  return oss.str();
 }
 
 string GeneralSchedule::getCategory()

@@ -2,8 +2,8 @@
 
 #include <iostream>
 
-MeetingSchedule::MeetingSchedule(int idCounter, string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now, string location, string participantns, string agenda, string host)
-    : ScheduleItem(idCounter, title, description, startDate, endDate, startTime, endTime, priority, now)
+MeetingSchedule::MeetingSchedule(int id, string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now, string location, string participantns, string agenda, string host)
+    : ScheduleItem(id, title, description, startDate, endDate, startTime, endTime, priority, now)
 {
   this->location = location;
   this->participantns = participantns;
@@ -32,6 +32,22 @@ void MeetingSchedule::setInfo(string title, string description, string startDate
 void MeetingSchedule::markAsCompleted()
 {
   ScheduleItem::markAsCompleted();
+}
+
+string MeetingSchedule::getType() const
+{
+  return "MEETING";
+}
+
+string MeetingSchedule::serialize() const
+{
+  std::ostringstream oss;
+  oss << serializeCommon() << '|'
+      << location << '|'
+      << participantns << '|'
+      << agenda << '|'
+      << host;
+  return oss.str();
 }
 
 string MeetingSchedule::getLocation()

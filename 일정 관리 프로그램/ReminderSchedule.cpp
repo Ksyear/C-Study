@@ -2,8 +2,8 @@
 
 #include <iostream>
 
-ReminderSchedule::ReminderSchedule(int idCounter, string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now, string reminderTime, string reminderMessage, string notificationType)
-    : ScheduleItem(idCounter, title, description, startDate, endDate, startTime, endTime, priority, now)
+ReminderSchedule::ReminderSchedule(int id, string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now, string reminderTime, string reminderMessage, string notificationType)
+    : ScheduleItem(id, title, description, startDate, endDate, startTime, endTime, priority, now)
 {
   this->reminderTime = reminderTime;
   this->reminderMessage = reminderMessage;
@@ -36,6 +36,22 @@ void ReminderSchedule::markAsCompleted()
 string ReminderSchedule::getReminderMessage()
 {
   return reminderMessage;
+}
+
+string ReminderSchedule::getType() const
+{
+  return "REMINDER";
+}
+
+string ReminderSchedule::serialize() const
+{
+  std::ostringstream oss;
+  oss << serializeCommon() << '|'
+      << reminderTime << '|'
+      << reminderMessage << '|'
+      << notificationType << '|'
+      << isReminderSent;
+  return oss.str();
 }
 
 bool ReminderSchedule::getIsReminderSent()

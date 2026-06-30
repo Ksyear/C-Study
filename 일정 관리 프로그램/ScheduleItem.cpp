@@ -1,9 +1,8 @@
 #include "ScheduleItem.h"
 
-// 구현 단계에서 객체를 만들때 상속하면 여러개가 계속 만들어지니까 분해할 것
-ScheduleItem::ScheduleItem(int idCounter, string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now)
+ScheduleItem::ScheduleItem(int id, string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now)
 {
-  this->id = ++idCounter;
+  this->id = id;
   this->title = title;
   this->description = description;
   this->startDate = startDate;
@@ -13,10 +12,8 @@ ScheduleItem::ScheduleItem(int idCounter, string title, string description, stri
   this->priority = priority;
   this->isCompleted = false;
   zoned_time zt{locate_zone("Asia/Seoul"), now};
-
   this->createdAt = std::format("{:%Y-%m-%d %H:%M}", zt);
   this->updatedAt = std::format("{:%Y-%m-%d %H:%M}", zt);
-  
 }
 
 void ScheduleItem::displayAllSchedules()
@@ -112,8 +109,36 @@ void ScheduleItem::setIsCompleted(bool isCompleted)
   this->isCompleted = isCompleted;
 }
 
+void ScheduleItem::setCreatedAt(const string &createdAt)
+{
+  this->createdAt = createdAt;
+}
+
+void ScheduleItem::setUpdatedAt(const string &updatedAt)
+{
+  this->updatedAt = updatedAt;
+}
+
 // 부모에서 자식의 getter 가져오기 위해 삽입(근데 객체지향에서는 권장하지 않음)
 string ScheduleItem::getReminderMessage()
 {
   return "";
+}
+
+string ScheduleItem::serializeCommon() const
+{
+  std::ostringstream oss;
+  oss << getType() << '|'
+      << id << '|'
+      << title << '|'
+      << description << '|'
+      << startDate << '|'
+      << endDate << '|'
+      << startTime << '|'
+      << endTime << '|'
+      << priority << '|'
+      << isCompleted << '|'
+      << createdAt << '|'
+      << updatedAt;
+  return oss.str();
 }
