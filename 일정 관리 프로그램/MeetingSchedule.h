@@ -5,11 +5,11 @@
 class MeetingSchedule : public ScheduleItem
 {
 public:
-  MeetingSchedule(int id, string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now, string location, string participantns, string agenda, string host);
+  MeetingSchedule(int userId, int id, string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now, string location, std::vector<int> participants, string agenda, int host);
 
   void displayAllSchedules() override;
 
-  void setInfo(string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now, string location, string participantns, string agenda, string host);
+  void setInfo(int userId, string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now, string location, std::vector<int> participants, string agenda, int host);
 
   void markAsCompleted() override;
 
@@ -19,13 +19,15 @@ public:
 
   string getLocation();
 
-  string getParticipantns();
+  std::vector<int> &getParticipants();
 
   string getAgenda();
 
-  string getHost();
+  int getHost();
 
 private:
-  string location, participantns, agenda, host;
+  string location, agenda;
+  int host;
+  std::vector<int> participants;
   system_clock::time_point now = system_clock::now();
 };

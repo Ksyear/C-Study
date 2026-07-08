@@ -1,9 +1,7 @@
 #include "ReminderSchedule.h"
 
-#include <iostream>
-
-ReminderSchedule::ReminderSchedule(int id, string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now, string reminderTime, string reminderMessage, string notificationType)
-    : ScheduleItem(id, title, description, startDate, endDate, startTime, endTime, priority, now)
+ReminderSchedule::ReminderSchedule(int userId, int id, string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now, string reminderTime, string reminderMessage, string notificationType)
+    : ScheduleItem(userId, id, title, description, startDate, endDate, startTime, endTime, priority, now)
 {
   this->reminderTime = reminderTime;
   this->reminderMessage = reminderMessage;
@@ -20,9 +18,9 @@ void ReminderSchedule::displayAllSchedules()
        << ", Is Reminder Sent: " << isReminderSent;
 }
 
-void ReminderSchedule::setInfo(string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now, string reminderTime, string reminderMessage, string notificationType)
+void ReminderSchedule::setInfo(int userId, string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now, string reminderTime, string reminderMessage, string notificationType)
 {
-  ScheduleItem::setInfo(title, description, startDate, endDate, startTime, endTime, priority, now);
+  ScheduleItem::setInfo(userId, title, description, startDate, endDate, startTime, endTime, priority, now);
   this->reminderTime = reminderTime;
   this->reminderMessage = reminderMessage;
   this->notificationType = notificationType;

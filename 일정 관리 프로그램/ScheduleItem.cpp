@@ -1,7 +1,8 @@
 #include "ScheduleItem.h"
 
-ScheduleItem::ScheduleItem(int id, string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now)
+ScheduleItem::ScheduleItem(int userId, int id, string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now)
 {
+  this->userId = userId;
   this->id = id;
   this->title = title;
   this->description = description;
@@ -18,7 +19,8 @@ ScheduleItem::ScheduleItem(int id, string title, string description, string star
 
 void ScheduleItem::displayAllSchedules()
 {
-  cout << "ID: " << id
+  cout << "User ID: " << userId
+       << ", ID: " << id
        << ", Title: " << title
        << ", Description: " << description
        << ", Start Date: " << startDate
@@ -31,8 +33,9 @@ void ScheduleItem::displayAllSchedules()
        << ", Updated At: " << updatedAt; //std::ctime(&updatedAt);
 }
 
-void ScheduleItem::setInfo(string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now)
+void ScheduleItem::setInfo(int userId, string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now)
 {
+  this->userId = userId;
   this->title = title;
   this->description = description;
   this->startDate = startDate;
@@ -47,6 +50,11 @@ void ScheduleItem::setInfo(string title, string description, string startDate, s
 void ScheduleItem::markAsCompleted()
 {
   setIsCompleted(true);
+}
+
+int ScheduleItem::getUserId()
+{
+  return userId;
 }
 
 int ScheduleItem::getId()
@@ -129,6 +137,7 @@ string ScheduleItem::serializeCommon() const
 {
   std::ostringstream oss;
   oss << getType() << '|'
+      << userId << '|'
       << id << '|'
       << title << '|'
       << description << '|'

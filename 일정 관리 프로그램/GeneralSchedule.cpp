@@ -1,9 +1,7 @@
 #include "GeneralSchedule.h"
 
-#include <iostream>
-
-GeneralSchedule::GeneralSchedule(int id, string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now, string category, string place, string memo)
-    : ScheduleItem(id, title, description, startDate, endDate, startTime, endTime, priority, now)
+GeneralSchedule::GeneralSchedule(int userId, int id, string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now, string category, string place, string memo)
+    : ScheduleItem(userId, id, title, description, startDate, endDate, startTime, endTime, priority, now)
 {
   this->category = category;
   this->place = place;
@@ -18,9 +16,9 @@ void GeneralSchedule::displayAllSchedules()
        << ", Memo: " << memo;
 }
 
-void GeneralSchedule::setInfo(string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now, string category, string place, string memo)
+void GeneralSchedule::setInfo(int userId, string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now, string category, string place, string memo)
 {
-  ScheduleItem::setInfo(title, description, startDate, endDate, startTime, endTime, priority, now);
+  ScheduleItem::setInfo(userId, title, description, startDate, endDate, startTime, endTime, priority, now);
   this->category = category;
   this->place = place;
   this->memo = memo;

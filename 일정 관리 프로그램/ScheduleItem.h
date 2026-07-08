@@ -1,11 +1,6 @@
 #pragma once
 
-#include <iostream>
-#include <format>
-#include <sstream>
-#include <string>
-#include <chrono>
-#include <ctime>
+#include "h.h"
 
 using namespace std::chrono;
 using namespace std;
@@ -13,15 +8,17 @@ using namespace std;
 class ScheduleItem
 {
 public:
-  ScheduleItem(int id, string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now);
+  ScheduleItem(int userId, int id, string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now);
 
   virtual ~ScheduleItem() = default;
 
   virtual void displayAllSchedules();
 
-  virtual void setInfo(string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now);
+  virtual void setInfo(int userId, string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now);
 
   virtual void markAsCompleted();
+
+  int getUserId();
 
   int getId();
 
@@ -52,7 +49,7 @@ public:
   void setUpdatedAt(const string &updatedAt);
 
   // 부모에서 자식의 getter 가져오기 위해 삽입(근데 객체지향에서는 권장하지 않음)
-  // virtual 소멸자를 넣어야 메모리/자원 누수가 안 남 => `getType()` 같은 가상 함수로 다형성을 쓰고 있다면, 가상 소멸자까지 같이 넣는 게 C++ 쪽 관례
+  // getType() 같은거로 다형성을 쓰고 있다면, 가상 소멸자까지 같이 넣는 게 C++ 쪽 관례
   virtual string getReminderMessage();
 
   virtual string getType() const = 0;
@@ -66,8 +63,9 @@ protected:
 
 private:
   int id = 0;
+  int userId = 0;
   string priority, title, description;
   string startDate, endDate, startTime, endTime;
-  string createdAt, updatedAt; // 이런시긍로 startDate을
+  string createdAt, updatedAt; 
   bool isCompleted, conflict;
 };

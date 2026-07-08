@@ -5,12 +5,12 @@
 class GeneralSchedule : public ScheduleItem
 {
 public:
-  GeneralSchedule(int id, string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now, string category, string place, string memo);
+  GeneralSchedule(int userId, int id, string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now, string category, string place, string memo);
 
   void displayAllSchedules() override;
 
   using ScheduleItem::setInfo;
-  void setInfo(string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now, string category, string place, string memo);
+  void setInfo(int userId, string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now, string category, string place, string memo);
 
   void markAsCompleted() override;
 

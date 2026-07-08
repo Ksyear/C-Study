@@ -5,11 +5,11 @@
 class TaskSchedule : public ScheduleItem
 {
 public:
-  TaskSchedule(int id, string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now, string deadline, int progress, string taskStatus, string assignedTo);
+  TaskSchedule(int userId, int id, string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now, string deadline, int progress, string taskStatus, string assignedTo);
 
   void displayAllSchedules() override;
 
-  void setInfo(string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now, string deadline, int progress, string taskStatus, string assignedTo);
+  void setInfo(int userId, string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now, string deadline, int progress, string taskStatus, string assignedTo);
 
   void markAsCompleted() override;
 

@@ -4,17 +4,10 @@
 #include "GeneralSchedule.h"
 #include "MeetingSchedule.h"
 #include "TaskSchedule.h"
+#include "ScheduleAddUpdate.h"
+#include "ScheduleSearch.h"
+#include "ScheduleSort.h"
 #include "ReminderSchedule.h"
-
-#include <iostream>
-#include <typeinfo>
-// STL => vector, memory, algorithm, fstream, sstream, stdexcept
-#include <vector> // std::vector: 실제 일정 객체만 순서대로 보관하는 동적 배열 컨테이너
-#include <memory> // std::unique_ptr: 일정 객체를 자동으로 delete해 주는 단일 소유 스마트 포인터
-#include <algorithm> // <algorithm>: 일정 검색·정렬에 사용하는 표준 알고리즘(find_if, sort 등)을 제공
-#include <fstream> // <fstream>: 일정 정보를 파일로 저장·불러오기 위한 파일 입출력 스트림 제공
-#include <sstream> // <sstream>: 문자열 한 줄을 공백 단위로 파싱할 때 쓰는 문자열 스트림 제공
-#include <stdexcept> // <stdexcept>: 잘못된 상태에서 예외를 던질 때 쓰는 표준 예외 클래스(runtime_error 등)
 
 class ScheduleManager
 {
@@ -22,6 +15,8 @@ public: // 구현 단계에서 객체를 만들때 상속하면 여러개가 계
   ScheduleManager();
 
   int inputInt();
+
+  string inputString();
 
   void addSchedule();
 
@@ -35,11 +30,25 @@ public: // 구현 단계에서 객체를 만들때 상속하면 여러개가 계
 
   void completeSchedule(int id);
 
+  void searchByScheduleByUserId(int userId);
+
+  void searchByUserAndTitle(int userId, const string &title);
+
+  void searchByUserAndDate(int userId, const string &startDate);
+
+  void searchByUserAndPriority(int userId, const string &priority);
+
   void searchByTitle(string title);
 
   void searchByDate(string startDate);
 
   void searchByPriority(string priority);
+
+  void sortByUserAndDate(int userId);
+
+  void sortByUserAndPriority(int userId);
+
+  void sortByUserAndCompleted(int userId);
 
   void sortByDate();
 
@@ -53,23 +62,29 @@ public: // 구현 단계에서 객체를 만들때 상속하면 여러개가 계
 
   void exit();
 
+  bool checkUserIdConflict(int userId);
+
 private:
   // unique_ptr => 스마트 포인터, 원소나 ScheduleManager 삭제시 객체 자동 해제
   using ItemPtr = std::unique_ptr<ScheduleItem>;
   std::vector<ItemPtr> scheduleItems;
-  string title, description, startDate, endDate, startTime, endTime, priority, category, place, memo, location, participantns, agenda, host, deadline, taskStatus, assignedTo, reminderTime, reminderMessage, notificationType;
+
+  // 검색 기능 담당 객체. scheduleItems를 참조로 공유 => 반드시 scheduleItems 뒤에 선언 => 초기화 순서를 맞추기(나머지도 동일)
+  ScheduleSearch search;
+  ScheduleSort sort;
+  ScheduleAddUpdate addUpdate;
+
+  string String;
+  int num;
+
   sys_days sdStart{}, sdEnd{};
   minutes st{}, et{};
-  int progress;
-  int num;
-  int choice;
-  int idCounter = 0;
 
   std::vector<ItemPtr>::iterator findById(int id);
 
-  void validateScheduleInput(int id, const string &title, const string &description, const string &startDate, const string &endDate, const string &startTime, const string &endTime, const string &priority);
+  void validateScheduleInput(int userId, int id, const string &title, const string &description, const string &startDate, const string &endDate, const string &startTime, const string &endTime, const string &priority);
 
-  bool checkConflict(int id, string startDate, string endDate, string startTime, string endTime);
+  bool checkConflict(int userId, int id, const string &startDate, const string &endDate, const string &startTime, const string &endTime);
 
   void saveToFile() const;
 
