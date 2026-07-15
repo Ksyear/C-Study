@@ -1,4 +1,4 @@
-#include "ScheduleSort.h"
+#include "../include/ScheduleSort.h"
 
 ScheduleSort::ScheduleSort(std::vector<ItemPtr> &items) : scheduleItems(items) {}
 

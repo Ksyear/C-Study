@@ -1,4 +1,4 @@
-#include "GeneralSchedule.h"
+#include "../include/GeneralSchedule.h"
 
 GeneralSchedule::GeneralSchedule(int userId, int id, string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now, string category, string place, string memo)
     : ScheduleItem(userId, id, title, description, startDate, endDate, startTime, endTime, priority, now)

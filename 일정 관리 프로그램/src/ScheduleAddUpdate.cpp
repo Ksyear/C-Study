@@ -1,5 +1,5 @@
-#include "ScheduleAddUpdate.h"
-#include "UserManager.h"
+#include "../include/ScheduleAddUpdate.h"
+#include "../include/UserManager.h"
 
 ScheduleAddUpdate::ScheduleAddUpdate(std::vector<ItemPtr> &items) : scheduleItems(items)
 {

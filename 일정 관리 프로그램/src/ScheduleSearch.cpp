@@ -1,4 +1,4 @@
-#include "ScheduleSearch.h"
+#include "../include/ScheduleSearch.h"
 
 ScheduleSearch::ScheduleSearch(const std::vector<ItemPtr> &items): scheduleItems(items)
 {
@@ -7,10 +7,10 @@ ScheduleSearch::ScheduleSearch(const std::vector<ItemPtr> &items): scheduleItems
 void ScheduleSearch::searchByScheduleByUserId(int userId)
 {
   bool found = false;
-  // 비교하지 말고 할것 if 쓰지말아라
+  // 여기서 비교하지 말아라?
   for (const auto &item : scheduleItems)
   {
-    if (item->getUserId() == userId)
+    if (item->sameId(userId))
     {
       item->displayAllSchedules();
       cout << endl;

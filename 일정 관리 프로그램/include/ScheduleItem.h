@@ -48,6 +48,8 @@ public:
 
   void setUpdatedAt(const string &updatedAt);
 
+  bool sameId(int userId);
+
   // 부모에서 자식의 getter 가져오기 위해 삽입(근데 객체지향에서는 권장하지 않음)
   // getType() 같은거로 다형성을 쓰고 있다면, 가상 소멸자까지 같이 넣는 게 C++ 쪽 관례
   virtual string getReminderMessage();

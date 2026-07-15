@@ -1,4 +1,4 @@
-#include "ScheduleItem.h"
+#include "../include/ScheduleItem.h"
 
 ScheduleItem::ScheduleItem(int userId, int id, string title, string description, string startDate, string endDate, string startTime, string endTime, string priority, system_clock::time_point now)
 {
@@ -125,6 +125,11 @@ void ScheduleItem::setCreatedAt(const string &createdAt)
 void ScheduleItem::setUpdatedAt(const string &updatedAt)
 {
   this->updatedAt = updatedAt;
+}
+
+bool ScheduleItem::sameId(int userId)
+{
+  return this->userId == userId;
 }
 
 // 부모에서 자식의 getter 가져오기 위해 삽입(근데 객체지향에서는 권장하지 않음)

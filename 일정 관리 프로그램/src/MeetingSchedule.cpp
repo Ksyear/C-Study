@@ -1,4 +1,4 @@
-#include "MeetingSchedule.h"
+#include "../include/MeetingSchedule.h"
 
 #include <iostream>
 
